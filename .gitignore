@@ -1,0 +1,23 @@
+# Created by https://www.toptal.com/developers/gitignore/api/macos,python,visualstudiocode,jupyternotebooks
+# Edit at https://www.toptal.com/developers/gitignore?templates=macos,python,visualstudiocode,jupyternotebooks
+
+### JupyterNotebooks ###
+# gitignore template for Jupyter Notebooks
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+### macOS ###
+# General
+.DS_Store
+
+### Python ###
+__pycache__/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+*.log
+
+# Data
+*.csv
