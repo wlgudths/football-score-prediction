@@ -32,8 +32,8 @@ def get_season_teams(df, season):
     
     return teams
 
-def init_stats(season):
-    teams = get_season_teams(season)
+def init_stats(df, season):
+    teams = get_season_teams(df, season)
     stats = {team : {'points' : 0, 'goals_for' : 0, 'goals_against' : 0, 'goal_diff' : 0} for team in teams}
     
     return stats
@@ -49,8 +49,8 @@ def update_season_stats(df, column):
         for _, row in season_df.iterrows():
             home = row["home"]
             away = row["away"]
-            home_score = row['home_score']
-            away_score = row['away_score']
+            home_score = int(row['home_score'])
+            away_score = int(row['away_score'])
 
             home_points, away_points = calculate_points(home_score, away_score)
 

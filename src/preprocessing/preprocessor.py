@@ -38,7 +38,6 @@ class Preprocessor:
         
         return self.df
         
-
     def split_column(self, column, separator='–', new_columns=None, expand=True, drop_original=True):
         """
         Summary: 특정 열을 구분자를 기준으로 나누어 새로운 열 생성
@@ -120,7 +119,27 @@ class Preprocessor:
             raise ValueError("case는 'lower' 또는 'upper'만 허용됩니다.")
         
         return self.df
+    
+    def convert_column(self, column, replace_map=None, symbol_remove=None):
+        """
+        DataFrame의 특정 column에 대해 문자열을 변환하는 함수 (inplace).
+        """
+        def convert(value):
+            if isinstance(value, str):
+                val = value.lower()
+                
+                if symbol_remove:
+                    for symbol in symbol_remove:
+                        val = val.replace(symbol, '')
+                
+                if replace_map:
+                    for suffix, factor in replace_map.items():
+                        if suffix in val:
+                            return float(val.replace(suffix, '')) * factor
+            return value
 
+        self.df[column] = self.df[column].apply(convert)
+    
     
     def rename_columns(self, rename_map, drop_missing=False):
         """
