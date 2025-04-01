@@ -119,28 +119,8 @@ class Preprocessor:
             raise ValueError("case는 'lower' 또는 'upper'만 허용됩니다.")
         
         return self.df
-    
-    def convert_column(self, column, replace_map=None, symbol_remove=None):
-        """
-        DataFrame의 특정 column에 대해 문자열을 변환하는 함수 (inplace).
-        """
-        def convert(value):
-            if isinstance(value, str):
-                val = value.lower()
-                
-                if symbol_remove:
-                    for symbol in symbol_remove:
-                        val = val.replace(symbol, '')
-                
-                if replace_map:
-                    for suffix, factor in replace_map.items():
-                        if suffix in val:
-                            return float(val.replace(suffix, '')) * factor
-            return value
-
-        self.df[column] = self.df[column].apply(convert)
-    
-    
+        
+    # 수정 필요 -> 해당 함수에서 Rename_map 딕셔너리 생성 + 리스트로 들어올 경우 columns로 바꾸기
     def rename_columns(self, rename_map, drop_missing=False):
         """
         Summary: 컬럼명 변경

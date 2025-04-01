@@ -4,7 +4,7 @@ import time
 import pandas as pd
 import requests
 from io import StringIO
-
+from save_utils import save_to_csv
 
 def fbref_scraper(start_year, end_year, stats=False, recent=False):
     """
@@ -134,24 +134,6 @@ def generate_transfermarkt_url(season):
     
     return html
 
-    
-def save_to_csv(df, file_name, save_dir='./data'):
-    """
-    Summary: 데이터프레임을 csv파일로 저장하는 함수
-
-    Args:
-        df (pd.DataFrame): 저장할 데이터프레임
-        file_name (str): 저장할 파일 이름
-        save_dir (str): 저장할 디렉토리 경로 (기본값: './data')
-    
-    Returns:
-        None
-    """
-    os.makedirs(save_dir, exist_ok=True)
-    file_path = os.path.join(save_dir, file_name)
-    df.to_csv(file_path, index=False)
-    print(f"해당 경로에 {file_path} 저장 완료")
-
 
 if __name__ == "__main__":
     # 2004-2005 시즌부터 2023-2024 시즌
@@ -167,10 +149,10 @@ if __name__ == "__main__":
     if fixture_df is not None:
         save_to_csv(fixture_df, fixture_file, save_fbref_dir)
     
-    # stats_file = "transfermarkt_stats.csv"
-    # stats_df = transfermarkt_scraper(start_year, end_year)
+    stats_file = "transfermarkt_stats.csv"
+    stats_df = transfermarkt_scraper(start_year, end_year)
 
-    # if stats_df is not None:
-    #     save_to_csv(stats_df, stats_file, save_transfermarkt_dir)
+    if stats_df is not None:
+        save_to_csv(stats_df, stats_file, save_transfermarkt_dir)
 
     
