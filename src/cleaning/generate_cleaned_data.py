@@ -60,7 +60,7 @@ def generate_cleaned_data(cfg: Dict) -> None:
     
     fbref_teams = set(fbref_df[fbref_cfg['target_columns'][0]].unique()) | set(fbref_df[fbref_cfg['target_columns'][1]].unique())
     tr_teams = set(tr_df[tr_cfg['source_columns']])
-    team_mapping = fuzzy_match_teams(source=tr_teams, target=fbref_teams, start_threshold=80, step=20)
+    team_mapping, _ = fuzzy_match_teams(source=tr_teams, target=fbref_teams, start_threshold=80, step=20)
 
     tr_df[tr_cfg['source_columns']] = tr_df[tr_cfg['source_columns']].replace(team_mapping)
 
