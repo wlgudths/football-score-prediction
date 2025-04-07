@@ -1,5 +1,5 @@
 import pandas as pd
-from typing import Dict, List, Tuple
+from typing import Dict, Tuple
 
 
 def update_season_stats(df: pd.DataFrame, column: str) -> pd.DataFrame:

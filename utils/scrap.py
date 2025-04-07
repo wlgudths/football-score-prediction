@@ -4,8 +4,7 @@ import random
 import pandas as pd
 import requests
 from io import StringIO
-from logger import logger
-from save_utils import save_to_csv
+from utils.logger import logger
 
 
 def fbref_scraper(start_year: int, end_year: int, stats: bool = False, recent: bool = False) -> pd.DataFrame:

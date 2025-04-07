@@ -12,13 +12,17 @@
 
 ### Python ###
 __pycache__/
-__init__.py
 
-# Installer logs
+# Log files
+*.log
 pip-log.txt
 pip-delete-this-directory.txt
 
-*.log
+# Package environment files
+.env
 
-# Data
+# Data & Temp
 *.csv
+
+# config
+*.yaml

@@ -142,7 +142,7 @@ class RawDataCleaner:
         Returns:
             self: 체이닝 가능한 self 객체 반환
         """
-        self.df = self.df.applymap(lambda x: x.strip().lower() if isinstance(x, str) else x)
+        self.df = self.df.map(lambda x: x.strip().lower() if isinstance(x, str) else x)
 
         if include_columns:
             self.df.columns = [col.strip().lower() for col in self.df.columns]
