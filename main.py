@@ -32,7 +32,10 @@ def main():
         
         save_to_csv(df=tr_raw_data, config=cfg, file_name=tr_cfg['file_name'], save_key=tr_cfg['save_key'])
 
-    generate_cleaned_data(cfg)
+    if cfg['cleaning'].get('enable') == True:
+        generate_cleaned_data(cfg)
+    
+    
 
 
 if __name__ == '__main__':
