@@ -10,9 +10,9 @@ def split_by_season(df: pd.DataFrame,
     """
     Summary
     """
-    train_df = df[df['season'] <= train_until]
-    val_df = df[df['season'] == val_year]
-    test_df = df[df['season'] >= test_from]
+    train_df = df[df['season'] <= train_until].copy()
+    val_df = df[df['season'] == val_year].copy()
+    test_df = df[df['season'] >= test_from].copy()
 
     if save:
         save_to_csv(df=train_df, config=cfg, file_name='train.csv', save_key='train')
@@ -22,7 +22,7 @@ def split_by_season(df: pd.DataFrame,
     return train_df, val_df, test_df
 
 
-def split_X_y(df: pd.DataFrame, target_cols: list[str], drop_cols: list[str] = []) -> pd.DataFrame:
+def split_x_y(df: pd.DataFrame, target_cols: list[str], drop_cols: list[str] = []) -> pd.DataFrame:
     """
     """
     X = df.drop(columns=target_cols + drop_cols, errors='ignore')

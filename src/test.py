@@ -1,36 +1,19 @@
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import LabelEncoder, StandardScaler
-from utils.split_dataset import split_by_season, split_X_y
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 
+from model.model_factory import LinearRegressionModel, RandomForestModel, XGBoostModel, CatBoostModel
+
+from preprocessing.generate_preprocessor import generate_preprocessing
+from utils.config_utils import load_config
+
 data_path = '/Users/sonjeehyung/Documents/Project/football-score-prediction/data/cleaned_data.csv'
+config_path = '/Users/sonjeehyung/Documents/Project/football-score-prediction/config/config.yaml'
+
 df = pd.read_csv(data_path)
-df['attendance'] = df['attendance'].fillna(0)
+config = load_config(config_path)
 
-all_teams = pd.concat([df['home'], df['away']]).unique()
-
-team_encoder = LabelEncoder()
-team_encoder.fit(all_teams)
-
-df['home'] = team_encoder.transform(df['home'])
-df['away'] = team_encoder.transform(df['away'])
-
-train_df, val_df, test_df = split_by_season(df=df)
-
-target_cols = ['home_score', 'away_score']
-drop_cols = ['wk', 'day', 'date', 'venue', 'referee', 'match report', 'season']
-
-X_train, y_train = split_X_y(train_df, target_cols, drop_cols)
-X_val, y_val = split_X_y(val_df, target_cols, drop_cols)
-X_test, y_test = split_X_y(test_df, target_cols, drop_cols)
-
-numerical_cols = X_train.select_dtypes(include=['int', 'float']).columns
-
-scaler = StandardScaler()
-X_train[numerical_cols] = scaler.fit_transform(X_train[numerical_cols])
-X_val[numerical_cols] = scaler.fit_transform(X_val[numerical_cols])
-X_test[numerical_cols] = scaler.fit_transform(X_test[numerical_cols])
+X_train, y_train, X_val, y_val, X_test, y_test = generate_preprocessing(df, config)
 
 lr_model = LinearRegressionModel()
 rf_model = RandomForestModel()
