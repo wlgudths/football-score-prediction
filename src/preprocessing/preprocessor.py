@@ -29,19 +29,20 @@ class Preprocessor():
         """
         """
         imputation_cfg = self.config['preprocessing']['imputation']
-        col = imputation_cfg['col']
+        cols = imputation_cfg['col']
         group = imputation_cfg['group']
         strategy = imputation_cfg['strategy']
 
-        if strategy == 'zero':
-            self.data.loc[:, col] = self.data[col].fillna(0)
-        elif strategy == 'mean':
-            self.data.loc[:, col] = self.data.groupby(group)[col].transform(lambda x: x.fillna(x.mean()))
-        elif strategy == 'median':
-            self.data.loc[:, col] = self.data.groupby(group)[col].transform(lambda x: x.fillna(x.median()))
-        else:
-            raise
-                
+        for col in cols:
+            if strategy == 'zero':
+                self.data.loc[:, col] = self.data[col].fillna(0)
+            elif strategy == 'mean':
+                self.data.loc[:, col] = self.data.groupby(group)[col].transform(lambda x: x.fillna(x.mean()))
+            elif strategy == 'median':
+                self.data.loc[:, col] = self.data.groupby(group)[col].transform(lambda x: x.fillna(x.median()))
+            else:
+                raise
+                    
         return self.data
     
     def numerical_features(self, col: str, method: str):
@@ -121,7 +122,7 @@ class Preprocessor():
             if col in skip_cols:
                 continue
             
-            elif col == self.config['preprocessing']['imputation']['col']:
+            elif col in self.config['preprocessing']['imputation']['col']:
                 self.impute_missing_value()
                 self.remove_outliers(col)
                 self.numerical_features(col, method)

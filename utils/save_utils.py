@@ -24,10 +24,10 @@ def save_to_csv(df: pd.DataFrame, config: Dict, file_name: str, save_key: str) -
         file_path = os.path.join(save_dir, file_name)
         df.to_csv(file_path, index=False)
 
-        config_path = config['save'].get('config_path')
+        config_path = config['save']['config_path']
         
         config['save'][save_key] = file_path
-        save_config(config=config, config_path=config_path)
+        save_config(config=config, save_path=config_path)
             
         logger.info(f'CSV 파일 저장 완료: {file_path}')
 
