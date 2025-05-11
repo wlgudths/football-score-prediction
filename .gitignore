@@ -23,6 +23,8 @@ pip-delete-this-directory.txt
 
 # Data & Temp
 *.csv
+*.pkl
+*.pth
 
 # config
 *.yaml
